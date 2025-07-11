@@ -1,12 +1,11 @@
 from fastapi import FastAPI, Response, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.utils import ImageReader
 from typing import Optional
 from io import BytesIO
 import os
-from pydantic import BaseModel, Field
 
 app = FastAPI(
     title="LC Draft Generator",
@@ -15,30 +14,34 @@ app = FastAPI(
 )
 
 class LCDraftData(BaseModel):
-    document_credit_no: Optional[str] = ""
-    date_of_issue: Optional[str] = ""
-    applicant: Optional[str] = ""
-    beneficiary: Optional[str] = ""
-    currency_amount: Optional[str] = ""
-    available_with: Optional[str] = ""
-    drafts_at: Optional[str] = ""
-    drawee: Optional[str] = ""
-    partial_shipments: Optional[str] = ""
-    transshipment: Optional[str] = ""
-    port_of_loading: Optional[str] = ""
-    port_of_discharge: Optional[str] = ""
-    latest_shipment_date: Optional[str] = ""
-    goods_description: Optional[str] = ""
-    documents_required: Optional[str] = ""
-    additional_conditions: Optional[str] = ""
-    charges: Optional[str] = ""
-    presentation_period: Optional[str] = ""
-    confirmation: Optional[str] = ""
-    negotiating_bank_instructions: Optional[str] = ""
-    advise_through: Optional[str] = ""
-    goods_quantity: Optional[str] = ""
-    goods_price: Optional[str] = ""
-    goods_incoterm: Optional[str] = ""
+    document_credit_no: Optional[str] = Field(default="")
+    date_of_issue: Optional[str] = Field(default="")
+    applicant: Optional[str] = Field(default="")
+    beneficiary: Optional[str] = Field(default="")
+    currency_amount: Optional[str] = Field(default="")
+    available_with: Optional[str] = Field(default="")
+    drafts_at: Optional[str] = Field(default="")
+    drawee: Optional[str] = Field(default="")
+    partial_shipments: Optional[str] = Field(default="")
+    transshipment: Optional[str] = Field(default="")
+    port_of_loading: Optional[str] = Field(default="")
+    port_of_discharge: Optional[str] = Field(default="")
+    latest_shipment_date: Optional[str] = Field(default="")
+    goods_description: Optional[str] = Field(default="")
+    documents_required: Optional[str] = Field(default="")
+    additional_conditions: Optional[str] = Field(default="")
+    charges: Optional[str] = Field(default="")
+    presentation_period: Optional[str] = Field(default="")
+    confirmation: Optional[str] = Field(default="")
+    negotiating_bank_instructions: Optional[str] = Field(default="")
+    advise_through: Optional[str] = Field(default="")
+    goods_quantity: Optional[str] = Field(default="")
+    goods_price: Optional[str] = Field(default="")
+    goods_incoterm: Optional[str] = Field(default="")
+
+@app.get("/")
+def root():
+    return {"message": "✅ LC Draft Generator API is running."}
 
 @app.post("/generate-lc-draft-pdf/")
 def generate_lc_pdf(data: LCDraftData):
