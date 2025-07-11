@@ -14,34 +14,30 @@ app = FastAPI(
 )
 
 class LCDraftData(BaseModel):
-    document_credit_no: Optional[str] = Field(default="")
-    date_of_issue: Optional[str] = Field(default="")
-    applicant: Optional[str] = Field(default="")
-    beneficiary: Optional[str] = Field(default="")
-    currency_amount: Optional[str] = Field(default="")
-    available_with: Optional[str] = Field(default="")
-    drafts_at: Optional[str] = Field(default="")
-    drawee: Optional[str] = Field(default="")
-    partial_shipments: Optional[str] = Field(default="")
-    transshipment: Optional[str] = Field(default="")
-    port_of_loading: Optional[str] = Field(default="")
-    port_of_discharge: Optional[str] = Field(default="")
-    latest_shipment_date: Optional[str] = Field(default="")
-    goods_description: Optional[str] = Field(default="")
-    documents_required: Optional[str] = Field(default="")
-    additional_conditions: Optional[str] = Field(default="")
-    charges: Optional[str] = Field(default="")
-    presentation_period: Optional[str] = Field(default="")
-    confirmation: Optional[str] = Field(default="")
-    negotiating_bank_instructions: Optional[str] = Field(default="")
-    advise_through: Optional[str] = Field(default="")
-    goods_quantity: Optional[str] = Field(default="")
-    goods_price: Optional[str] = Field(default="")
-    goods_incoterm: Optional[str] = Field(default="")
-
-@app.get("/")
-def root():
-    return {"message": "✅ LC Draft Generator API is running."}
+    document_credit_no: Optional[str] = ""
+    date_of_issue: Optional[str] = ""
+    applicant: Optional[str] = ""
+    beneficiary: Optional[str] = ""
+    currency_amount: Optional[str] = ""
+    available_with: Optional[str] = ""
+    drafts_at: Optional[str] = ""
+    drawee: Optional[str] = ""
+    partial_shipments: Optional[str] = ""
+    transshipment: Optional[str] = ""
+    port_of_loading: Optional[str] = ""
+    port_of_discharge: Optional[str] = ""
+    latest_shipment_date: Optional[str] = ""
+    goods_description: Optional[str] = ""
+    documents_required: Optional[str] = ""
+    additional_conditions: Optional[str] = ""
+    charges: Optional[str] = ""
+    presentation_period: Optional[str] = ""
+    confirmation: Optional[str] = ""
+    negotiating_bank_instructions: Optional[str] = ""
+    advise_through: Optional[str] = ""
+    goods_quantity: Optional[str] = ""
+    goods_price: Optional[str] = ""
+    goods_incoterm: Optional[str] = ""
 
 @app.post("/generate-lc-draft-pdf/")
 def generate_lc_pdf(data: LCDraftData):
@@ -62,7 +58,7 @@ def generate_lc_pdf(data: LCDraftData):
             c.drawString(x, y, value)
 
         # === Page 1 ===
-        bg1 = r"C:\Users\Lenovo\OneDrive\Desktop\LC draft export\1.jpg"
+        bg1 = os.path.join("static", "1.jpg")
         draw_image(bg1)
         draw_text(data.document_credit_no, 200, 710)
         draw_text(data.date_of_issue, 220, 690)
@@ -84,7 +80,7 @@ def generate_lc_pdf(data: LCDraftData):
         c.showPage()
 
         # === Page 2 ===
-        bg2 = r"C:\Users\Lenovo\OneDrive\Desktop\LC draft export\2.jpg"
+        bg2 = os.path.join("static", "2.jpg")
         draw_image(bg2)
         draw_text(data.additional_conditions, 240, 610)
         draw_text(data.charges, 160, 510)
