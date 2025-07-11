@@ -6,6 +6,7 @@ from reportlab.lib.utils import ImageReader
 from typing import Optional
 from io import BytesIO
 import os
+from pydantic import BaseModel, Field
 
 app = FastAPI(
     title="LC Draft Generator",
